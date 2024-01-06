@@ -1,6 +1,7 @@
 // script.js
 const imageViewer = document.getElementById('imageViewer');
 let currentIndex = 0;
+let images = []; // Flyt erklæringen uden for fetch-blokken
 
 function changeImage() {
     currentIndex = (currentIndex + 1) % images.length;
@@ -11,7 +12,7 @@ function changeImage() {
 fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .then(response => response.json())
   .then(data => {
-    const images = data.filter(item => item.type === 'file' && item.name.match(/\.(png|jpg|jpeg|gif)$/)).map(item => item.download_url);
+    images = data.filter(item => item.type === 'file' && item.name.match(/\.(png|jpg|jpeg|gif)$/)).map(item => item.download_url);
     
     // Hvis der er billeder, start billedviseren
     if (images.length > 0) {
@@ -21,7 +22,7 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
       imageViewer.addEventListener('click', changeImage);
 
       // Skift automatisk billede efter 10 sekunder
-      setInterval(changeImage, 100);
+      setInterval(changeImage, 10000);
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
     }

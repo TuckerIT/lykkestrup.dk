@@ -1,14 +1,13 @@
 /* style.css */
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
 }
 
-h1 {
-    color: #3498db;
-}
-
-p {
-    font-size: 18px;
-    color: #555;
+img {
+    max-width: 100%;
+    cursor: pointer;
 }

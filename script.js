@@ -33,11 +33,14 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
         startAutoChange(); // Start den automatiske skift igen
       });
 
-      // Skift billede ved tryk (touch) på mobile enheder
+
+              // Skift billede ved tryk (touch) på mobile enheder
       imageViewer.addEventListener('touchend', () => {
-        clearInterval(intervalId); // Stop den automatiske skift ved tryk
-        changeImage();
-        startAutoChange(); // Start den automatiske skift igen
+        if (canChangeImage) {
+            clearInterval(intervalId); // Stop den automatiske skift ved tryk
+            changeImage();
+            startAutoChange(); // Start den automatiske skift igen
+        }
       });
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
@@ -46,3 +49,4 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .catch(error => {
     console.error('Fejl ved indlæsning af billeder:', error);
   });
+    

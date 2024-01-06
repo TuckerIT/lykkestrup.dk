@@ -2,10 +2,15 @@
 const imageViewer = document.getElementById('imageViewer');
 let currentIndex = 0;
 let images = [];
+let intervalId;
 
 function changeImage() {
     currentIndex = (currentIndex + 1) % images.length;
     imageViewer.src = images[currentIndex];
+}
+
+function startAutoChange() {
+    intervalId = setInterval(changeImage, 10000);
 }
 
 // Hent en liste over billeder fra mappen "images"
@@ -19,12 +24,20 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
       imageViewer.src = images[currentIndex];
       
       // Skift automatisk billede efter 10 sekunder
-      setInterval(changeImage, 5000);
+      startAutoChange();
 
-      // Skift billede ved klik
+      // Skift billede ved klik (desktop)
       imageViewer.addEventListener('click', () => {
         clearInterval(intervalId); // Stop den automatiske skift, når der klikkes
         changeImage();
+        startAutoChange(); // Start den automatiske skift igen
+      });
+
+      // Skift billede ved tryk (touch) på mobile enheder
+      imageViewer.addEventListener('touchend', () => {
+        clearInterval(intervalId); // Stop den automatiske skift ved tryk
+        changeImage();
+        startAutoChange(); // Start den automatiske skift igen
       });
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
@@ -33,5 +46,3 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .catch(error => {
     console.error('Fejl ved indlæsning af billeder:', error);
   });
-
-let intervalId; // Gem ID for intervallet for at kunne stoppe det senere

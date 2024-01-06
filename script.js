@@ -1,28 +1,22 @@
 // script.js
 const imageViewer = document.getElementById('imageViewer');
 let currentIndex = 0;
-let images = []; // Flyt erklæringen uden for fetch-blokken
-
-function changeImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    imageViewer.src = images[currentIndex];
-}
 
 // Hent en liste over billeder fra mappen "images"
 fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .then(response => response.json())
   .then(data => {
-    images = data.filter(item => item.type === 'file' && item.name.match(/\.(png|jpg|jpeg|gif)$/)).map(item => item.download_url);
+    const images = data.filter(item => item.type === 'file' && item.name.match(/\.(png|jpg|jpeg|gif)$/)).map(item => item.download_url);
     
     // Hvis der er billeder, start billedviseren
     if (images.length > 0) {
       imageViewer.src = images[currentIndex];
       
       // Skift billede ved klik
-      imageViewer.addEventListener('click', changeImage);
-
-      // Skift automatisk billede efter 10 sekunder
-      setInterval(changeImage, 10000);
+      imageViewer.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        imageViewer.src = images[currentIndex];
+      });
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
     }

@@ -2,6 +2,11 @@
 const imageViewer = document.getElementById('imageViewer');
 let currentIndex = 0;
 
+function changeImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    imageViewer.src = images[currentIndex];
+}
+
 // Hent en liste over billeder fra mappen "images"
 fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .then(response => response.json())
@@ -13,10 +18,10 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
       imageViewer.src = images[currentIndex];
       
       // Skift billede ved klik
-      imageViewer.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        imageViewer.src = images[currentIndex];
-      });
+      imageViewer.addEventListener('click', changeImage);
+
+      // Skift automatisk billede efter 10 sekunder
+      setInterval(changeImage, 10000);
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
     }
@@ -24,4 +29,3 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
   .catch(error => {
     console.error('Fejl ved indlæsning af billeder:', error);
   });
-

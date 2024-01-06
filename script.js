@@ -19,7 +19,7 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
       imageViewer.src = images[currentIndex];
       
       // Skift automatisk billede efter 10 sekunder
-      setInterval(changeImage, 100);
+      setInterval(changeImage, 5000);
 
       // Skift billede ved klik
       imageViewer.addEventListener('click', () => {

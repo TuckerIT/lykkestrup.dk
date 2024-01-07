@@ -5,19 +5,16 @@ let images = [];
 let intervalId;
 let canChangeImage = true;
 
-function changeImage(forward = true) {
-    if (forward) {
-        currentIndex = (currentIndex + 1) % images.length;
-    } else {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-    }
-
+function changeImage() {
+    currentIndex = (currentIndex + 1) % images.length;
     imageViewer.src = images[currentIndex];
 
-    // Genaktiver skift, når der skiftes billede
-    setTimeout(() => {
-        canChangeImage = true;
-    }, 1000);
+    // Genaktiver skift, når det sidste billede nås
+    if (currentIndex === images.length - 1) {
+        setTimeout(() => {
+            canChangeImage = true;
+        }, 1000);
+    }
 }
 
 function startAutoChange() {
@@ -37,46 +34,24 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
     // Hvis der er billeder, start billedviseren
     if (images.length > 0) {
       imageViewer.src = images[currentIndex];
-
+      
       // Skift automatisk billede efter 10 sekunder
       startAutoChange();
 
       // Skift billede ved klik (desktop)
-      imageViewer.addEventListener('click', (event) => {
+      imageViewer.addEventListener('click', () => {
         if (canChangeImage) {
             clearInterval(intervalId); // Stop den automatiske skift, når der klikkes
-
-            // Beregn klikpositionen i forhold til billedets bredde
-            const clickPosition = event.clientX - imageViewer.getBoundingClientRect().left;
-            const imageWidth = imageViewer.offsetWidth;
-
-            // Skift billede baseret på klikposition
-            if (clickPosition > 0.9 * imageWidth) {
-                changeImage(true);  // Næste billede ved at trykke på 90% af højre side
-            } else if (clickPosition < 0.1 * imageWidth) {
-                changeImage(false);  // Forrige billede ved at trykke på 10% af venstre side
-            }
-
+            changeImage();
             startAutoChange(); // Start den automatiske skift igen
         }
       });
 
       // Skift billede ved tryk (touch) på mobile enheder
-      imageViewer.addEventListener('touchend', (event) => {
+      imageViewer.addEventListener('touchend', () => {
         if (canChangeImage) {
             clearInterval(intervalId); // Stop den automatiske skift ved tryk
-
-            // Beregn trykpositionen i forhold til billedets bredde
-            const touchPosition = event.changedTouches[0].clientX - imageViewer.getBoundingClientRect().left;
-            const imageWidth = imageViewer.offsetWidth;
-
-            // Skift billede baseret på trykposition
-            if (touchPosition > 0.9 * imageWidth) {
-                changeImage(true);  // Næste billede ved at trykke på 90% af højre side
-            } else if (touchPosition < 0.1 * imageWidth) {
-                changeImage(false);  // Forrige billede ved at trykke på 10% af venstre side
-            }
-
+            changeImage();
             startAutoChange(); // Start den automatiske skift igen
         }
       });

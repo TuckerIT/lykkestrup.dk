@@ -22,7 +22,7 @@ function startAutoChange() {
         if (canChangeImage) {
             changeImage();
         }
-    }, 10000);
+    }, 20000);
 }
 
 // Hent en liste over billeder fra mappen "images"

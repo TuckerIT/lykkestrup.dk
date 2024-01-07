@@ -67,7 +67,7 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
             clearInterval(intervalId); // Stop den automatiske skift ved tryk
 
             // Beregn trykpositionen i forhold til billedets bredde
-            const touchPosition = event.touches[0].clientX - imageViewer.getBoundingClientRect().left;
+            const touchPosition = event.changedTouches[0].clientX - imageViewer.getBoundingClientRect().left;
             const imageWidth = imageViewer.offsetWidth;
 
             // Skift billede baseret på trykposition

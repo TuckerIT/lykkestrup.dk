@@ -8,7 +8,13 @@ let canChangeImage = true;
 function changeImage() {
     currentIndex = (currentIndex + 1) % images.length;
     imageViewer.src = images[currentIndex];
-    canChangeImage = true; // Tillad skift igen efter 1 sekunds forsinkelse
+
+    // Genaktiver skift, når det sidste billede nås
+    if (currentIndex === images.length - 1) {
+        setTimeout(() => {
+            canChangeImage = true;
+        }, 1000);
+    }
 }
 
 function startAutoChange() {

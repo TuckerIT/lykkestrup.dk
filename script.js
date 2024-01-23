@@ -54,12 +54,14 @@ fetch('https://api.github.com/repos/tuckerit/lykkestrup.dk/contents/images')
 
       // Skift billede ved tryk (touch) på mobile enheder
       imageViewer.addEventListener('touchend', () => {
-        if (canChangeImage) {
-            clearInterval(intervalId); // Stop den automatiske skift ved tryk
-            changeImage();
-            startAutoChange(); // Start den automatiske skift igen
-        }
-      });
+    console.log('Touchend event fired.');  // Tilføj denne linje
+    if (canChangeImage) {
+        console.log('Changing image...');  // Tilføj denne linje
+        clearInterval(intervalId); // Stop den automatiske skift ved tryk
+        changeImage();
+        startAutoChange(); // Start den automatiske skift igen
+    }
+});
     } else {
       console.error('Ingen billeder blev fundet i mappen "images".');
     }

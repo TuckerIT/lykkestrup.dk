@@ -22,9 +22,12 @@ function changeImage() {
     if (currentIndex === images.length - 1) {
         setTimeout(() => {
             canChangeImage = true;
+            clearInterval(intervalId); // Stop den automatiske skift, når sidste billede nås
+            startAutoChange(); // Start den automatiske skift igen
         }, 1000);
     }
 }
+
 
 function startAutoChange() {
     intervalId = setInterval(() => {

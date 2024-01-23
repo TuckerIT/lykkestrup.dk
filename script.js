@@ -4,16 +4,21 @@ let currentIndex = 0;
 let images = [];
 let intervalId;
 let canChangeImage = true;
+let changingImage = false;
 
 function changeImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    imageViewer.src = images[currentIndex];
+    if (!changingImage) {
+        changingImage = true;
+        currentIndex = (currentIndex + 1) % images.length;
+        imageViewer.src = images[currentIndex];
 
-    // Genaktiver skift, når det sidste billede nås
-    if (currentIndex === images.length - 1) {
-        setTimeout(() => {
-            canChangeImage = true;
-        }, 1000);
+        // Genaktiver skift, når det sidste billede nås
+        if (currentIndex === images.length - 1) {
+            setTimeout(() => {
+                canChangeImage = true;
+                changingImage = false;
+            }, 1000);
+        }
     }
 }
 

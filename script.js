@@ -7,6 +7,7 @@ let canChangeImage = true;
 let changingImage = false;
 
 function changeImage() {
+    console.log('Changing image...', images[currentIndex]);  // Tilføj denne linje
     if (!changingImage) {
         changingImage = true;
         currentIndex = (currentIndex + 1) % images.length;
@@ -21,6 +22,7 @@ function changeImage() {
         }
     }
 }
+
 
 function startAutoChange() {
     intervalId = setInterval(() => {

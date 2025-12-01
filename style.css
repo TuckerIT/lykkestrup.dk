@@ -1,14 +1,26 @@
 /* style.css */
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+    /* 1. Baggrund: Meget lys, blød grå (ikke kridhvid) */
+    background-color: #f8f8f8; 
+    
+    /* 2. Tekstfarve og Læsbarhed */
+    color: #333333; /* Mørk grå tekst for god kontrast mod den lyse baggrund */
+    font-family: Arial, Helvetica, sans-serif; /* Letlæselig standard skrifttype */
+    line-height: 1.6; /* Øget linjeafstand for bedre læseflow */
+    
+    /* 3. Mobil-venlighed/Layout */
+    margin: 0 auto; /* Centrerer indholdet horisontalt (på brede skærme) */
+    max-width: 750px; /* Begrænser linjelængden, hvilket gør teksten nemmere at læse */
+    padding: 20px; /* Vigtigt: Sikrer luft (margin) omkring teksten på mobilen, så den ikke klistrer til kanten */
+    
+    /* Fjerner de gamle centreringsregler (height: 100vh; display: flex; osv.) */
 }
 
-img {
-    max-width: 100%;
-    max-height: 100vh;
-    cursor: pointer;
+h1 {
+    text-align: center; /* Centrerer overskriften for et pænt look */
+    margin-bottom: 40px; 
+}
+
+p {
+    margin-bottom: 25px; /* Skaber tydelig afstand mellem stroferne */
 }

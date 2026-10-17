@@ -1,68 +1,855 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Søren banjomus</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Den Officielle Tøjinspektion™</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #f6f3eb;
+  --ink: #25251f;
+  --muted: #77776d;
+  --accent: #e8fa77;
+  --pink: #ffb9ce;
+  --border: #deddd3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.stamp {
+  background: var(--ink);
+  color: white;
+  padding: 5px 10px;
+  transform: rotate(3deg);
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 42px 20px 90px;
+}
+
+.eyebrow {
+  display: inline-block;
+  background: var(--accent);
+  border: 1px solid var(--ink);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+h1, h2, h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -1.5px;
+}
+
+h1 {
+  font-size: clamp(44px, 10vw, 76px);
+  line-height: .98;
+  margin: 25px 0;
+}
+
+h1 span { color: #a29d8f; }
+
+.intro {
+  font-size: 16px;
+  max-width: 470px;
+}
+
+.hero-art {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 35px 20px;
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.hero-art .big-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(30px, 8vw, 52px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1;
+  transform: rotate(-3deg);
+}
+
+.hero-art small {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 18px;
+}
+
+.card {
+  background: white;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 18px 0;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.card-head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.number {
+  background: var(--accent);
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.desc {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 3px 0 0;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 9px;
+}
+
+input, select {
+  width: 100%;
+  padding: 15px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  background: #fafaf7;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #718600;
+  box-shadow: 0 0 0 3px var(--accent);
+}
+
+input::placeholder { color: #999; }
+
+.help {
+  margin-top: 14px;
+  padding: 14px;
+  background: #f3f4ed;
+  border-radius: 6px;
+  font-size: 13px;
+  display: none;
+}
+
+.help.active { display: block; }
+
+.help strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.help .measurement {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px dashed #d5d7c9;
+}
+
+.help .measurement:last-child { border: none; }
+
+.help .measurement span:last-child {
+  font-weight: 800;
+  text-align: right;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 20px;
+  background: var(--accent);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: .15s;
+}
+
+button:hover {
+  background: #d8f34a;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 22px;
+}
+
+#error {
+  display: none;
+  background: #ffe0e0;
+  border: 1px solid #c44;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+#success {
+  display: none;
+  text-align: center;
+  padding: 65px 10px;
+}
+
+#success .big {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 90px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+#success h2 {
+  font-size: 48px;
+  line-height: 1.05;
+  margin: 25px 0;
+}
+
+.success-stamp {
+  display: inline-block;
+  background: var(--accent);
+  border: 3px solid var(--ink);
+  padding: 12px 20px;
+  font-weight: 800;
+  transform: rotate(-5deg);
+  margin: 25px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 25px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+footer a { color: inherit; }
+
+@media(max-width: 480px) {
+  .card { padding: 19px; }
+  main { padding-top: 30px; }
+}
+</style>
 </head>
+
 <body>
-    <h1>Søren banjomus</h1>
 
-    <p>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Hør på Søren Banjomus, han spiller nemlig nu</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Kom og syng og dans med os, det syn’s vi, at I sku’</strong><br>
-        <strong>Vi glæder os til juleaften, så bli’r træet tændt</strong><br>
-        <strong>Og vi får fine julegaver, ih, hvor er vi spændt</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Bar’ det altså snart var nu</strong>
-    </p>
+<header>
+  <span>DEPARTEMENTET FOR BEKLÆDNING</span>
+  <span class="stamp">TOP SECRET-ish</span>
+</header>
 
-    <p>
-        På loftet sidder nissen, ham, I ved, der er så sød<br>
-        Han er så mæt, for han har spist et stort fad julegrød<br>
-        Nu sidder han i stolen, og han snorker som en bjørn<br>
-        Og drømmer om de gaver han skal gi’ til byens børn<br>
-        Og Lurifax, hans kat, der ellers altid er så fræk<br>
-        Den drømmer sødt om røget sild med flødeovertræk<br>
-        Så pusler det og pludselig fra musehulllet klang<br>
-        En munter lille banjo-sang
-    </p>
+<main>
 
-    <p>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Hør på Søren Banjomus, han spiller nemlig nu</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Kom og syng og dans med os, det syn’s vi, at I sku’</strong><br>
-        <strong>Vi glæder os til juleaften, så bli’r træet tændt</strong><br>
-        <strong>Og vi får fine julegaver, ih, hvor er vi spændt</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Bar’ det altså snart var nu</strong>
-    </p>
+<div id="formArea">
 
-    <p>
-        “Kom med,” sa’ Søren Banjomus, “de sover begge to<br>
-        Nu ska’ vi lave skæg”, “juhu”, sa’ musene og lo<br>
-        Og frem fra musehullet myldrede store mus og små<br>
-        Ja, selv den allermindste Tim, der knap nok kunne gå<br>
-        Om Lurifax og nissefar de dansede en vals<br>
-        Og lille Tim bandt nissens skæg i missekattens hals<br>
-        Og mens de slæbte bort med ost og julelækkeri<br>
-        Sang alle med på denne melodi:
-    </p>
+  <div class="eyebrow">Officielt dokument · Formular 001</div>
 
-    <p>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Hør på Søren Banjomus, han spiller nemlig nu</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Kom og syng og dans med os, det syn’s vi, at I sku’</strong><br>
-        <strong>Vi glæder os til juleaften, så bli’r træet tændt</strong><br>
-        <strong>Og vi får fine julegaver, ih, hvor er vi spændt</strong><br>
-        <strong>Skillema-dinka-dinka-du, skillema-dinka-du</strong><br>
-        <strong>Bar’ det altså snart var nu – ka’ ikke vente</strong><br>
-        <strong>Bar’ det altså snart var nu – ka’ ikke vente</strong><br>
-        <strong>Bar’ det altså snart var nu</strong>
-    </p>
+  <h1>
+    Vi skal bruge<br>
+    dine <span>mål.</span>
+  </h1>
+
+  <p class="intro">
+    Du er hermed indkaldt til den officielle tøjinspektion.
+    Formålet er uklart. Dresscoden er endnu mere uklar.
+  </p>
+
+  <div class="hero-art">
+    <div class="big-text">
+      PASSER<br>
+      DET MON?
+    </div>
+    <small>OPERATION: BEKLÆDNING</small>
+  </div>
+
+  <p class="intro">
+    Udfyld nedenstående så præcist som muligt.
+    Der er ingen forkerte svar. Kun potentielt meget
+    stramme bukser.
+  </p>
+
+  <form
+    id="sizeForm"
+    action="https://formspree.io/f/xppqbwql"
+    method="POST"
+  >
+
+    <input
+      type="hidden"
+      name="_subject"
+      value="Ny tøjinspektion modtaget!"
+    >
+
+    <!-- NAVN -->
+
+    <section class="card">
+      <div class="card-head">
+        <div class="number">00</div>
+        <div>
+          <h2>Identificér dig selv</h2>
+          <p class="desc">Vi skal vide, hvem vi skal grine af.</p>
+        </div>
+      </div>
+
+      <label for="name">Dit navn *</label>
+      <input
+        id="name"
+        name="Navn"
+        type="text"
+        placeholder="F.eks. Bukse-Bent"
+        autocomplete="name"
+        maxlength="100"
+        required
+      >
+    </section>
+
+    <!-- OVERDELE -->
+
+    <section class="card">
+      <div class="card-head">
+        <div class="number">01</div>
+        <div>
+          <h2>Overdele</h2>
+          <p class="desc">T-shirts, poloer og torso-relaterede beklædningsgenstande.</p>
+        </div>
+      </div>
+
+      <label for="top">Din størrelse *</label>
+
+      <select id="top" name="Overdele" required>
+        <option value="">Vælg din størrelse...</option>
+      </select>
+
+      <div class="help" id="topHelp" aria-live="polite"></div>
+
+      <p class="note">
+        Baseret på Tøjekspertens guide til T-shirts og poloer.
+        Brystmål måles rundt om brystet.
+      </p>
+    </section>
+
+    <!-- SKJORTER -->
+
+    <section class="card">
+      <div class="card-head">
+        <div class="number">02</div>
+        <div>
+          <h2>Skjorter</h2>
+          <p class="desc">Hvor meget plads kræver din hals?</p>
+        </div>
+      </div>
+
+      <label for="shirt">Din skjortestørrelse *</label>
+
+      <select id="shirt" name="Skjorter" required>
+        <option value="">Vælg din størrelse...</option>
+      </select>
+
+      <div class="help" id="shirtHelp" aria-live="polite"></div>
+
+      <p class="note">
+        Kravemålet er halsens omkreds i centimeter.
+        Mål nederst på halsen uden at stramme målebåndet.
+      </p>
+    </section>
+
+    <!-- BLAZERE -->
+
+    <section class="card">
+      <div class="card-head">
+        <div class="number">03</div>
+        <div>
+          <h2>Blazere</h2>
+          <p class="desc">Til når du skal ligne en mand med styr på sin pension.</p>
+        </div>
+      </div>
+
+      <label for="blazer">Din blazerstørrelse *</label>
+
+      <select id="blazer" name="Blazer" required>
+        <option value="">Vælg din størrelse...</option>
+      </select>
+
+      <div class="help" id="blazerHelp" aria-live="polite"></div>
+
+      <p class="note">
+        EU-størrelser er vejledende standardstørrelser.
+        Brystmålet er kroppens omkreds, ikke blazerens
+        færdige mål. Pasform kan variere mellem mærker.
+      </p>
+    </section>
+
+    <!-- BUKSER -->
+
+    <section class="card">
+      <div class="card-head">
+        <div class="number">04</div>
+        <div>
+          <h2>Bukser</h2>
+          <p class="desc">Sandhedens øjeblik. Ingen elastik kan redde dig her.</p>
+        </div>
+      </div>
+
+      <label for="pants">Livvidde i tommer *</label>
+
+      <select id="pants" name="Bukser - Livvidde" required>
+        <option value="">Vælg din livvidde...</option>
+      </select>
+
+      <div class="help" id="pantsHelp" aria-live="polite"></div>
+
+      <p class="note">
+        W angiver livvidden i tommer. EU-størrelser er
+        omtrentlige, da jeans og habitbukser ikke bruger
+        helt samme størrelsessystem.
+      </p>
+
+      <div style="margin-top:22px">
+        <label for="length">Benlængde *</label>
+
+        <select id="length" name="Bukser - Benlængde" required>
+          <option value="">Vælg din benlængde...</option>
+          <option value="L28">L28 – ca. 71 cm</option>
+          <option value="L30">L30 – ca. 76 cm</option>
+          <option value="L32">L32 – ca. 81 cm</option>
+          <option value="L34">L34 – ca. 86 cm</option>
+          <option value="L36">L36 – ca. 91 cm</option>
+          <option value="L38">L38 – ca. 97 cm</option>
+        </select>
+
+        <p class="note">
+          Benlængden måles fra skridtet og ned langs
+          indersiden af benet til buksebenets afslutning.
+          L står for længde i tommer.
+        </p>
+      </div>
+    </section>
+
+    <!-- SEND -->
+
+    <div style="margin-top:35px">
+
+      <button type="submit" id="submitBtn">
+        GEM MINE HEMMELIGE MÅL →
+      </button>
+
+      <div id="error" role="alert"></div>
+
+      <p class="footer-note">
+        Ved at trykke send accepterer du, at dine
+        tøjstørrelser bliver videregivet til den
+        selvudnævnte beklædningsansvarlige.
+        Ingen målebånd kom til skade under processen.
+      </p>
+
+    </div>
+
+  </form>
+
+</div>
+
+<!-- SUCCESS -->
+
+<div id="success" role="status">
+
+  <div class="big">OK!</div>
+
+  <div class="eyebrow">Mission accomplished</div>
+
+  <h2>
+    Du er nu officielt<br>
+    blevet målt.
+  </h2>
+
+  <p id="successName"></p>
+
+  <p>
+    Dine dybt fortrolige kropsdimensioner
+    er blevet sendt til hovedkontoret.
+  </p>
+
+  <div class="success-stamp">
+    GODKENDT AF TØJMINISTERIET
+  </div>
+
+  <p class="note">
+    Du kan nu lukke siden og fortsætte dit liv,
+    som om intet var hændt.
+  </p>
+
+</div>
+
+</main>
+
+<footer>
+  DEN OFFICIELLE TØJINSPEKTION™ · EST. 2026
+  <br><br>
+  Størrelsesdata inspireret af
+  <a
+    href="https://www.toejeksperten.dk/stoerrelsesguide"
+    target="_blank"
+    rel="noopener noreferrer"
+  >Tøjekspertens størrelsesguide</a>.
+  <br>
+  Ikke officielt tilknyttet Tøjeksperten.
+</footer>
+
+<script>
+
+/* =========================================
+   STØRRELSESDATA
+   ========================================= */
+
+/*
+  Overdele, skjorter og jeans:
+  Vejledende størrelsestabeller inspireret
+  af Tøjekspertens størrelsesguide.
+
+  Blazere:
+  Vejledende EU-standardstørrelser.
+
+  EU-konvertering for jeans:
+  Omtrentlig reference, ikke en eksakt
+  omregning mellem to størrelsessystemer.
+*/
+
+const sizes = {
+
+  top: [
+    ["S", "91–96 cm", "66–67 cm"],
+    ["M", "96–101 cm", "68–69 cm"],
+    ["L", "101–106 cm", "70–71 cm"],
+    ["XL", "106–111 cm", "72–73 cm"],
+    ["2XL", "111–116 cm", "74–75 cm"],
+    ["3XL", "118–124 cm", "76–77 cm"],
+    ["4XL", "124–132 cm", "78–79 cm"]
+  ],
+
+  shirt: [
+    ["S", "37–38 cm", "92–98 cm"],
+    ["M", "39–40 cm", "98–104 cm"],
+    ["L", "41–42 cm", "104–108 cm"],
+    ["XL", "43–44 cm", "108–114 cm"],
+    ["2XL", "45–46 cm", "114–120 cm"],
+    ["3XL", "47–48 cm", "120–128 cm"],
+    ["4XL", "49–50 cm", "128–136 cm"]
+  ],
+
+  blazer: [
+    ["EU 42", "XXS", "82–85 cm"],
+    ["EU 44", "XS", "86–89 cm"],
+    ["EU 46", "S", "90–93 cm"],
+    ["EU 48", "M", "94–97 cm"],
+    ["EU 50", "M/L", "98–101 cm"],
+    ["EU 52", "L", "102–105 cm"],
+    ["EU 54", "XL", "106–109 cm"],
+    ["EU 56", "2XL", "110–113 cm"],
+    ["EU 58", "2XL/3XL", "114–117 cm"],
+    ["EU 60", "3XL", "118–121 cm"],
+    ["EU 62", "4XL", "122–125 cm"],
+    ["EU 64", "4XL/5XL", "126–129 cm"],
+    ["EU 66", "5XL", "130–133 cm"],
+    ["EU 68", "6XL", "134–137 cm"]
+  ],
+
+  pants: [
+    ["W27", "68 cm", "XXS", "ca. EU 42"],
+    ["W28", "71 cm", "XS", "ca. EU 44"],
+    ["W29", "74 cm", "S", "ca. EU 44–46"],
+    ["W30", "76 cm", "S", "ca. EU 46"],
+    ["W31", "79 cm", "M", "ca. EU 46–48"],
+    ["W32", "82 cm", "M", "ca. EU 48"],
+    ["W33", "84 cm", "M", "ca. EU 48–50"],
+    ["W34", "86 cm", "L", "ca. EU 50"],
+    ["W35", "89 cm", "L", "ca. EU 50–52"],
+    ["W36", "91 cm", "XL", "ca. EU 52"],
+    ["W38", "97 cm", "XL", "ca. EU 54–56"],
+    ["W40", "102 cm", "2XL", "ca. EU 56–58"],
+    ["W42", "106 cm", "2XL", "ca. EU 58–60"],
+    ["W44", "112 cm", "3XL", "ca. EU 62"],
+    ["W46", "117 cm", "3XL", "ca. EU 64"],
+    ["W48", "122 cm", "4XL", "ca. EU 66"],
+    ["W50", "127 cm", "4XL", "ca. EU 68"],
+    ["W52", "132 cm", "5XL", "ca. EU 70"],
+    ["W54", "137 cm", "6XL", "ca. EU 72"]
+  ]
+
+};
+
+
+/* =========================================
+   HJÆLPETEKSTER
+   ========================================= */
+
+const configurations = {
+
+  top: {
+    labels: ["Brystmål", "Ryglængde"],
+    title: "Din overdel svarer cirka til:"
+  },
+
+  shirt: {
+    labels: ["Kravemål / nakke", "Brystmål"],
+    title: "Din skjortestørrelse svarer til:"
+  },
+
+  blazer: {
+    labels: ["Bogstavstørrelse", "Brystmål"],
+    title: "Din blazerstørrelse svarer cirka til:"
+  },
+
+  pants: {
+    labels: [
+      "Livvidde",
+      "Bogstavstørrelse",
+      "EU-reference"
+    ],
+    title: "Din buksestørrelse svarer cirka til:"
+  }
+
+};
+
+
+/* =========================================
+   OPBYG DROPDOWNS AUTOMATISK
+   ========================================= */
+
+Object.keys(sizes).forEach(function(category) {
+
+  const select = document.getElementById(category);
+  const help = document.getElementById(category + "Help");
+  const config = configurations[category];
+
+  sizes[category].forEach(function(item) {
+
+    const option = document.createElement("option");
+
+    option.value = item[0];
+    option.textContent = item[0];
+
+    if (category === "shirt") {
+      option.textContent += " · Krave " + item[1];
+    }
+
+    if (category === "blazer") {
+      option.textContent += " · " + item[1];
+    }
+
+    if (category === "pants") {
+      option.textContent += " · " + item[1];
+    }
+
+    select.appendChild(option);
+
+  });
+
+  select.addEventListener("change", function() {
+
+    const selected = sizes[category].find(
+      item => item[0] === select.value
+    );
+
+    if (!selected) {
+      help.classList.remove("active");
+      help.replaceChildren();
+      return;
+    }
+
+    help.replaceChildren();
+
+    const heading = document.createElement("strong");
+    heading.textContent = config.title;
+    help.appendChild(heading);
+
+    config.labels.forEach(function(label, index) {
+
+      const row = document.createElement("div");
+      row.className = "measurement";
+
+      const left = document.createElement("span");
+      left.textContent = label;
+
+      const right = document.createElement("span");
+      right.textContent = selected[index + 1];
+
+      row.appendChild(left);
+      row.appendChild(right);
+      help.appendChild(row);
+
+    });
+
+    help.classList.add("active");
+
+  });
+
+});
+
+
+/* =========================================
+   FORMSPREE AJAX
+   ========================================= */
+
+const form = document.getElementById("sizeForm");
+const submitBtn = document.getElementById("submitBtn");
+const errorBox = document.getElementById("error");
+
+form.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "SENDER TIL HOVEDKONTORET...";
+
+  errorBox.style.display = "none";
+
+  const formData = new FormData(form);
+
+  const personName = formData.get("Navn").trim();
+
+  // Tilføj en samlet oversigt til Formspree-mailen.
+  formData.append(
+    "Samlet oversigt",
+    [
+      "NAVN: " + personName,
+      "OVERDELE: " + formData.get("Overdele"),
+      "SKJORTE: " + formData.get("Skjorter"),
+      "BLAZER: " + formData.get("Blazer"),
+      "BUKSER - LIVVIDDE: " + formData.get("Bukser - Livvidde"),
+      "BUKSER - BENLÆNGDE: " + formData.get("Bukser - Benlængde")
+    ].join("\n")
+  );
+
+  try {
+
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (response.ok) {
+
+      document.getElementById("formArea").style.display = "none";
+
+      const success = document.getElementById("success");
+      success.style.display = "block";
+
+      document.getElementById("successName").textContent =
+        personName + ", din indsendelse er registreret.";
+
+      form.reset();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    } else {
+
+      const data = await response.json().catch(() => ({}));
+
+      let message = "Noget gik galt. Prøv venligst igen.";
+
+      if (data.errors && data.errors.length) {
+        message = data.errors
+          .map(error => error.message)
+          .join(" ");
+      }
+
+      throw new Error(message);
+
+    }
+
+  } catch (error) {
+
+    errorBox.textContent =
+      "HOVEDKONTORET MELDER FEJL: " + error.message;
+
+    errorBox.style.display = "block";
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "PRØV IGEN →";
+
+  }
+
+});
+
+</script>
+
 </body>
 </html>
